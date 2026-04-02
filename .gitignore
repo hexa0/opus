@@ -93,3 +93,5 @@ output.wav
 outputL.wav
 outputR.wav
 tester
+dump_modes_fixed
+dump_modes_float

@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
     opus_encoder_ctl(enc, OPUS_SET_BITRATE(256000));
     opus_encoder_ctl(enc, OPUS_SET_COMPLEXITY(10));
     opus_encoder_ctl(enc, OPUS_SET_SIGNAL(OPUS_SIGNAL_MUSIC));
-	opus_encoder_ctl(enc, OPUS_SET_QEXT(1));
+	// opus_encoder_ctl(enc, OPUS_SET_QEXT(1));
 
     printf("Starting encoding loop...\n");
     int frame_count = 0;

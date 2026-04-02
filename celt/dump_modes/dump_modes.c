@@ -79,7 +79,7 @@ void dump_modes(FILE *file, CELTMode **modes, int nb_modes)
       int standard, framerate;
 
       mdctSize = mode->shortMdctSize*mode->nbShortMdcts;
-      standard = (mode->Fs == 400*(opus_int32)mode->shortMdctSize);
+      standard = 0;//(mode->Fs == 400*(opus_int32)mode->shortMdctSize);
       framerate = mode->Fs/mode->shortMdctSize;
 
       if (!standard)
@@ -156,28 +156,6 @@ void dump_modes(FILE *file, CELTMode **modes, int nb_modes)
 
       fprintf(file, "#endif\n");
       fprintf(file, "\n");
-
-      /* QEXT Pulse cache */
-      if (mode->qext_cache.index != NULL) {
-         fprintf(file, "#ifdef ENABLE_QEXT\n");
-         fprintf(file, "# ifndef DEF_QEXT_PULSE_CACHE%d\n", mode->Fs/mdctSize);
-         fprintf(file, "# define DEF_QEXT_PULSE_CACHE%d\n", mode->Fs/mdctSize);
-         fprintf (file, "static const opus_int16 qext_cache_index%d[%d] = {\n", mode->Fs/mdctSize, (mode->maxLM+2)*NB_QEXT_BANDS);
-         for (j=0;j<NB_QEXT_BANDS*(mode->maxLM+2);j++)
-            fprintf (file, "%d,%c", mode->qext_cache.index[j],(j+16)%15==0?'\n':' ');
-         fprintf (file, "};\n");
-         fprintf (file, "static const unsigned char qext_cache_bits%d[%d] = {\n", mode->Fs/mdctSize, mode->qext_cache.size);
-         for (j=0;j<mode->qext_cache.size;j++)
-            fprintf (file, "%d,%c", mode->qext_cache.bits[j],(j+16)%15==0?'\n':' ');
-         fprintf (file, "};\n");
-         fprintf (file, "static const unsigned char qext_cache_caps%d[%d] = {\n", mode->Fs/mdctSize, (mode->maxLM+1)*2*NB_QEXT_BANDS);
-         for (j=0;j<(mode->maxLM+1)*2*NB_QEXT_BANDS;j++)
-            fprintf (file, "%d,%c", mode->qext_cache.caps[j],(j+16)%15==0?'\n':' ');
-         fprintf (file, "};\n");
-         fprintf(file, "# endif\n");
-         fprintf(file, "#endif\n");
-         fprintf(file, "\n");
-      }
 
       /* FFT twiddles */
       fprintf(file, "#ifndef FFT_TWIDDLES%d_%d\n", mode->Fs, mdctSize);
@@ -323,12 +301,7 @@ void dump_modes(FILE *file, CELTMode **modes, int nb_modes)
             mode->cache.size, mode->Fs/mdctSize, mode->Fs/mdctSize, mode->Fs/mdctSize);
 
       fprintf(file, "#ifdef ENABLE_QEXT\n");
-      if (mode->qext_cache.index != NULL) {
-         fprintf(file, "{%d, qext_cache_index%d, qext_cache_bits%d, qext_cache_caps%d},    /* qext_cache */\n",
-               mode->qext_cache.size, mode->Fs/mdctSize, mode->Fs/mdctSize, mode->Fs/mdctSize);
-      } else {
-         fprintf(file, "{0, NULL, NULL, NULL},    /* qext_cache */\n");
-      }
+      fprintf(file, "{0, NULL, NULL, NULL},    /* qext_cache */\n");
       fprintf(file, "#endif\n");
       fprintf(file, "};\n");
    }

@@ -78,14 +78,14 @@ static const unsigned char band_allocation[] = {
 
 /* Defining 25 critical bands for the full 0-20 kHz audio bandwidth
    Taken from http://ccrma.stanford.edu/~jos/bbt/Bark_Frequency_Scale.html */
-#define BARK_BANDS 25
+#define BARK_BANDS 27
 static const opus_int16 bark_freq[BARK_BANDS+1] = {
       0,   100,   200,   300,   400,
     510,   630,   770,   920,  1080,
    1270,  1480,  1720,  2000,  2320,
    2700,  3150,  3700,  4400,  5300,
    6400,  7700,  9500, 12000, 15500,
-  20000};
+  20000, 22000, 24000};
 
 static opus_int16 *compute_ebands(opus_int32 Fs, int frame_size, int res, int *nbEBands)
 {
@@ -168,7 +168,7 @@ static void compute_allocation_table(CELTMode *mode)
 {
    int i, j;
    unsigned char *allocVectors;
-   int maxBands = sizeof(eband5ms)/sizeof(eband5ms[0])-1;
+   int maxBands = 22;
 
    mode->nbAllocVectors = BITALLOC_SIZE;
    allocVectors = opus_alloc(sizeof(unsigned char)*(BITALLOC_SIZE*mode->nbEBands));
@@ -488,7 +488,7 @@ static const opus_int16 qext_eBands_180[] = {
      90,  98, 106, 114, 122, 130, 138, 146, 154, 162, 168, 174, 180
 };
 
-static const opus_int16 qext_logN_180[] = {24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 21, 21, 21};
+static const opus_int16 qext_logN_180[] = {24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 21, 21, 21};
 
 /* Extra bands. */
 static const opus_int16 qext_eBands_240[] = {
@@ -496,7 +496,7 @@ static const opus_int16 qext_eBands_240[] = {
     120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240
 };
 
-static const opus_int16 qext_logN_240[] = {27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27};
+static const opus_int16 qext_logN_240[] = {27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27};
 
 void compute_qext_mode(CELTMode *qext, const CELTMode *m)
 {
