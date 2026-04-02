@@ -232,7 +232,6 @@ extern "C" {
 #define OPUS_BANDWIDTH_WIDEBAND              1103 /**< 8 kHz bandpass @hideinitializer*/
 #define OPUS_BANDWIDTH_SUPERWIDEBAND         1104 /**<12 kHz bandpass @hideinitializer*/
 #define OPUS_BANDWIDTH_FULLBAND              1105 /**<20 kHz bandpass @hideinitializer*/
-#define OPUS_BANDWIDTH_ACTUALFULLBAND        1106 /**<24 kHz bandpass @hideinitializer*/
 
 #define OPUS_FRAMESIZE_ARG                   5000 /**< Select frame size from the argument (default) */
 #define OPUS_FRAMESIZE_2_5_MS                5001 /**< Use 2.5 ms frames */

@@ -561,10 +561,7 @@ static int opus_decode_frame(OpusDecoder *st, const unsigned char *data,
          endband = 19;
          break;
       case OPUS_BANDWIDTH_FULLBAND:
-         endband = 25;
-         break;
-      case OPUS_BANDWIDTH_ACTUALFULLBAND:
-         endband = 25;
+         endband = 21;
          break;
       default:
          celt_assert(0);

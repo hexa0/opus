@@ -873,9 +873,6 @@ int main(int argc, char *argv[])
     case OPUS_BANDWIDTH_FULLBAND:
          bandwidth_string = "fullband";
          break;
-    case OPUS_BANDWIDTH_ACTUALFULLBAND:
-         bandwidth_string = "actualfullband";
-         break;
     case OPUS_AUTO:
          bandwidth_string = "auto bandwidth";
          break;

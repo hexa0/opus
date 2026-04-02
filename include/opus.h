@@ -731,7 +731,6 @@ OPUS_EXPORT int opus_packet_parse(
   * @retval OPUS_BANDWIDTH_WIDEBAND Wideband (8kHz bandpass)
   * @retval OPUS_BANDWIDTH_SUPERWIDEBAND Superwideband (12kHz bandpass)
   * @retval OPUS_BANDWIDTH_FULLBAND Fullband (20kHz bandpass)
-  * @retval OPUS_BANDWIDTH_ACTUALFULLBAND ActualFullband (24kHz bandpass)
   * @retval OPUS_INVALID_PACKET The compressed data passed is corrupted or of an unsupported type
   */
 OPUS_EXPORT OPUS_WARN_UNUSED_RESULT int opus_packet_get_bandwidth(const unsigned char *data) OPUS_ARG_NONNULL(1);

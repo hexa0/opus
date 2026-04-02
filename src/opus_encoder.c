@@ -2278,10 +2278,7 @@ static opus_int32 opus_encode_frame_native(OpusEncoder *st, const opus_res *pcm,
                 endband = 19;
                 break;
             case OPUS_BANDWIDTH_FULLBAND:
-                endband = 25;
-			case OPUS_BANDWIDTH_ACTUALFULLBAND:
-				endband = 25;
-                break;
+                endband = 21;
         }
         celt_encoder_ctl(celt_enc, CELT_SET_END_BAND(endband));
         celt_encoder_ctl(celt_enc, CELT_SET_CHANNELS(st->stream_channels));
@@ -2864,7 +2861,7 @@ int opus_encoder_ctl(OpusEncoder *st, int request, ...)
         case OPUS_SET_MAX_BANDWIDTH_REQUEST:
         {
             opus_int32 value = va_arg(ap, opus_int32);
-            if (value < OPUS_BANDWIDTH_NARROWBAND || value > OPUS_BANDWIDTH_ACTUALFULLBAND)
+            if (value < OPUS_BANDWIDTH_NARROWBAND || value > OPUS_BANDWIDTH_FULLBAND)
             {
                goto bad_arg;
             }
@@ -2891,7 +2888,7 @@ int opus_encoder_ctl(OpusEncoder *st, int request, ...)
         case OPUS_SET_BANDWIDTH_REQUEST:
         {
             opus_int32 value = va_arg(ap, opus_int32);
-            if ((value < OPUS_BANDWIDTH_NARROWBAND || value > OPUS_BANDWIDTH_ACTUALFULLBAND) && value != OPUS_AUTO)
+            if ((value < OPUS_BANDWIDTH_NARROWBAND || value > OPUS_BANDWIDTH_FULLBAND) && value != OPUS_AUTO)
             {
                goto bad_arg;
             }
