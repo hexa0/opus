@@ -2278,7 +2278,8 @@ static opus_int32 opus_encode_frame_native(OpusEncoder *st, const opus_res *pcm,
                 endband = 19;
                 break;
             case OPUS_BANDWIDTH_FULLBAND:
-                endband = 22;
+                endband = 21;
+				break;
         }
         celt_encoder_ctl(celt_enc, CELT_SET_END_BAND(endband));
         celt_encoder_ctl(celt_enc, CELT_SET_CHANNELS(st->stream_channels));
