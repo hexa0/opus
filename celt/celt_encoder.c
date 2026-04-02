@@ -2390,18 +2390,18 @@ int celt_encode_with_ec(CELTEncoder * OPUS_RESTRICT st, const opus_res * pcm, in
 
    if (C==2)
    {
-      static const opus_val16 intensity_thresholds[21]=
-      /* 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19  20  off*/
-        {  1, 2, 3, 4, 5, 6, 7, 8,16,24,36,44,50,56,62,67,72,79,88,106,134};
-      static const opus_val16 intensity_histeresis[21]=
-        {  1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 4, 5, 6,  8, 8};
+      static const opus_val16 intensity_thresholds[22]=
+      /* 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19  20  21  off*/
+        {  1, 2, 3, 4, 5, 6, 7, 8,16,24,36,44,50,56,62,67,72,79,88,106,134,150};
+      static const opus_val16 intensity_histeresis[22]=
+        {  1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 4, 5, 6,  8, 8, 8};
 
       /* Always use MS for 2.5 ms frames until we can do a better analysis */
       if (LM!=0)
          dual_stereo = stereo_analysis(mode, X, LM, N);
 
       st->intensity = hysteresis_decision((opus_val16)(equiv_rate/1000),
-            intensity_thresholds, intensity_histeresis, 21, st->intensity);
+            intensity_thresholds, intensity_histeresis, 22, st->intensity);
       st->intensity = IMIN(end,IMAX(start, st->intensity));
    }
 
@@ -2617,7 +2617,7 @@ int celt_encode_with_ec(CELTEncoder * OPUS_RESTRICT st, const opus_res * pcm, in
       else  if (equiv_rate < (opus_int32)80000*C)
          min_bandwidth = 19;
       else
-         min_bandwidth = 20;
+         min_bandwidth = 21;
       signalBandwidth = IMAX(st->analysis.bandwidth, min_bandwidth);
    }
 #endif

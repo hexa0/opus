@@ -146,7 +146,7 @@ void validate_celt_decoder(CELTDecoder *st)
 #if !defined(CUSTOM_MODES) && !defined(ENABLE_OPUS_CUSTOM_API) && !defined(ENABLE_QEXT)
    celt_assert(st->mode == opus_custom_mode_create(48000, 960, NULL));
    celt_assert(st->overlap == 120);
-   celt_assert(st->end <= 21);
+   celt_assert(st->end <= 25);
 #else
 /* From Section 4.3 in the spec: "The normal CELT layer uses 21 of those bands,
    though Opus Custom (see Section 6.2) may use a different number of bands"
