@@ -10,6 +10,82 @@ include(OpusFunctions)
 include(OpusBuildtype)
 include(OpusConfig)
 include(OpusSources)
+
+if(OPUS_DISABLE_ENCODER)
+  list(REMOVE_ITEM opus_sources
+       src/opus_encoder.c
+       src/opus_multistream_encoder.c
+       src/opus_projection_encoder.c)
+  list(REMOVE_ITEM opus_sources_float
+       src/analysis.c
+       src/mlp.c
+       src/mlp_data.c)
+  list(REMOVE_ITEM silk_sources
+       silk/init_encoder.c
+       silk/enc_API.c
+       silk/encode_indices.c
+       silk/encode_pulses.c
+       silk/VAD.c
+       silk/stereo_find_predictor.c
+       silk/stereo_quant_pred.c
+       silk/LPC_analysis_filter.c)
+  list(REMOVE_ITEM silk_sources_fixed
+       silk/fixed/LTP_analysis_filter_FIX.c
+       silk/fixed/LTP_scale_ctrl_FIX.c
+       silk/fixed/corrMatrix_FIX.c
+       silk/fixed/encode_frame_FIX.c
+       silk/fixed/find_LPC_FIX.c
+       silk/fixed/find_LTP_FIX.c
+       silk/fixed/find_pitch_lags_FIX.c
+       silk/fixed/find_pred_coefs_FIX.c
+       silk/fixed/noise_shape_analysis_FIX.c
+       silk/fixed/process_gains_FIX.c
+       silk/fixed/residual_energy_FIX.c
+       silk/fixed/residual_energy16_FIX.c
+       silk/fixed/warped_autocorrelation_FIX.c)
+  list(REMOVE_ITEM silk_sources_float
+       silk/float/apply_sine_window_FLP.c
+       silk/float/corrMatrix_FLP.c
+       silk/float/encode_frame_FLP.c
+       silk/float/find_LPC_FLP.c
+       silk/float/find_LTP_FLP.c
+       silk/float/find_pitch_lags_FLP.c
+       silk/float/find_pred_coefs_FLP.c
+       silk/float/LPC_analysis_filter_FLP.c
+       silk/float/LTP_analysis_filter_FLP.c
+       silk/float/LTP_scale_ctrl_FLP.c
+       silk/float/noise_shape_analysis_FLP.c
+       silk/float/process_gains_FLP.c
+       silk/float/regularize_correlations_FLP.c
+       silk/float/residual_energy_FLP.c
+       silk/float/warped_autocorrelation_FLP.c)
+  list(REMOVE_ITEM celt_sources
+       celt/celt_encoder.c
+       celt/entenc.c)
+endif()
+
+if(OPUS_DISABLE_DECODER)
+  list(REMOVE_ITEM opus_sources
+       src/opus_decoder.c
+       src/opus_multistream_decoder.c
+       src/opus_projection_decoder.c)
+  list(REMOVE_ITEM silk_sources
+       silk/init_decoder.c
+       silk/decode_core.c
+       silk/decode_frame.c
+       silk/decode_parameters.c
+       silk/decode_indices.c
+       silk/decode_pulses.c
+       silk/decoder_set_fs.c
+       silk/dec_API.c
+       silk/PLC.c
+       silk/NLSF_decode.c
+       silk/stereo_decode_pred.c)
+  list(REMOVE_ITEM celt_sources
+       celt/celt_decoder.c
+       celt/entdec.c)
+endif()
+
 include(GNUInstallDirs)
 include(CMakeDependentOption)
 include(FeatureSummary)
@@ -102,6 +178,14 @@ add_feature_info(OPUS_OSCE OPUS_OSCE ${OPUS_OSCE_HELP_STR})
 set(OPUS_QEXT_HELP_STR "enable scalable quality extension.")
 option(OPUS_QEXT ${OPUS_QEXT_HELP_STR} OFF)
 add_feature_info(OPUS_QEXT OPUS_QEXT ${OPUS_QEXT_HELP_STR})
+
+set(OPUS_DISABLE_ENCODER_HELP_STR "disable the encoder.")
+option(OPUS_DISABLE_ENCODER ${OPUS_DISABLE_ENCODER_HELP_STR} OFF)
+add_feature_info(OPUS_DISABLE_ENCODER OPUS_DISABLE_ENCODER ${OPUS_DISABLE_ENCODER_HELP_STR})
+
+set(OPUS_DISABLE_DECODER_HELP_STR "disable the decoder.")
+option(OPUS_DISABLE_DECODER ${OPUS_DISABLE_DECODER_HELP_STR} OFF)
+add_feature_info(OPUS_DISABLE_DECODER OPUS_DISABLE_DECODER ${OPUS_DISABLE_DECODER_HELP_STR})
 
 if(APPLE)
   set(OPUS_BUILD_FRAMEWORK_HELP_STR "build Framework bundle for Apple systems.")
@@ -432,6 +516,14 @@ endif()
 
 if (OPUS_QEXT)
   target_compile_definitions(opus PRIVATE ENABLE_QEXT)
+endif()
+
+if (OPUS_DISABLE_ENCODER)
+  target_compile_definitions(opus PUBLIC OPUS_DISABLE_ENCODER)
+endif()
+
+if (OPUS_DISABLE_DECODER)
+  target_compile_definitions(opus PUBLIC OPUS_DISABLE_DECODER)
 endif()
 
 if(NOT OPUS_DISABLE_INTRINSICS)

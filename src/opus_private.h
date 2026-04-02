@@ -96,6 +96,7 @@ typedef enum {
   MAPPING_TYPE_AMBISONICS
 } MappingType;
 
+#ifndef OPUS_DISABLE_ENCODER
 struct OpusMSEncoder {
    ChannelLayout layout;
    int arch;
@@ -109,16 +110,23 @@ struct OpusMSEncoder {
    /* then opus_val32 window_mem[channels*120]; */
    /* then opus_val32 preemph_mem[channels]; */
 };
+#endif
 
+#ifndef OPUS_DISABLE_DECODER
 struct OpusMSDecoder {
    ChannelLayout layout;
    /* Decoder states go here */
 };
+#endif
 
+#ifndef OPUS_DISABLE_ENCODER
 int opus_multistream_encoder_ctl_va_list(struct OpusMSEncoder *st, int request,
   va_list ap);
+#endif
+#ifndef OPUS_DISABLE_DECODER
 int opus_multistream_decoder_ctl_va_list(struct OpusMSDecoder *st, int request,
   va_list ap);
+#endif
 
 int validate_layout(const ChannelLayout *layout);
 int get_left_channel(const ChannelLayout *layout, int stream_id, int prev);
@@ -184,14 +192,18 @@ int encode_size(int size, unsigned char *data);
 
 opus_int32 frame_size_select(int application, opus_int32 frame_size, int variable_duration, opus_int32 Fs);
 
+#ifndef OPUS_DISABLE_ENCODER
 opus_int32 opus_encode_native(OpusEncoder *st, const opus_res *pcm, int frame_size,
       unsigned char *data, opus_int32 out_data_bytes, int lsb_depth,
       const void *analysis_pcm, opus_int32 analysis_size, int c1, int c2,
       int analysis_channels, downmix_func downmix, int float_api);
+#endif
 
+#ifndef OPUS_DISABLE_DECODER
 int opus_decode_native(OpusDecoder *st, const unsigned char *data, opus_int32 len,
       opus_res *pcm, int frame_size, int decode_fec, int self_delimited,
       opus_int32 *packet_offset, int soft_clip, const OpusDRED *dred, opus_int32 dred_offset);
+#endif
 
 /* Make sure everything is properly aligned. */
 static OPUS_INLINE int align(int i)
@@ -217,6 +229,7 @@ opus_int32 opus_repacketizer_out_range_impl(OpusRepacketizer *rp, int begin, int
 
 int pad_frame(unsigned char *data, opus_int32 len, opus_int32 new_len);
 
+#ifndef OPUS_DISABLE_ENCODER
 int opus_multistream_encode_native
 (
   struct OpusMSEncoder *st,
@@ -230,7 +243,9 @@ int opus_multistream_encode_native
   int float_api,
   void *user_data
 );
+#endif
 
+#ifndef OPUS_DISABLE_DECODER
 int opus_multistream_decode_native(
   struct OpusMSDecoder *st,
   const unsigned char *data,
@@ -242,6 +257,7 @@ int opus_multistream_decode_native(
   int soft_clip,
   void *user_data
 );
+#endif
 
 opus_int32 opus_packet_extensions_parse(const unsigned char *data,
  opus_int32 len, opus_extension_data *extensions, opus_int32 *nb_extensions,

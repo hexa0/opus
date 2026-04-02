@@ -172,7 +172,9 @@ extern "C" {
   * @see opus_multistream_encoder_create
   * @see opus_multistream_encoder_init
   */
+#ifndef OPUS_DISABLE_ENCODER
 typedef struct OpusMSEncoder OpusMSEncoder;
+#endif
 
 /** Opus multistream decoder state.
   * This contains the complete state of a multistream Opus decoder.
@@ -180,8 +182,11 @@ typedef struct OpusMSEncoder OpusMSEncoder;
   * @see opus_multistream_decoder_create
   * @see opus_multistream_decoder_init
   */
+#ifndef OPUS_DISABLE_DECODER
 typedef struct OpusMSDecoder OpusMSDecoder;
+#endif
 
+#ifndef OPUS_DISABLE_ENCODER
 /**\name Multistream encoder functions */
 /**@{*/
 
@@ -486,7 +491,9 @@ OPUS_EXPORT void opus_multistream_encoder_destroy(OpusMSEncoder *st);
 OPUS_EXPORT int opus_multistream_encoder_ctl(OpusMSEncoder *st, int request, ...) OPUS_ARG_NONNULL(1);
 
 /**@}*/
+#endif /* OPUS_DISABLE_ENCODER */
 
+#ifndef OPUS_DISABLE_DECODER
 /**\name Multistream decoder functions */
 /**@{*/
 
@@ -726,6 +733,7 @@ OPUS_EXPORT int opus_multistream_decoder_ctl(OpusMSDecoder *st, int request, ...
 OPUS_EXPORT void opus_multistream_decoder_destroy(OpusMSDecoder *st);
 
 /**@}*/
+#endif /* OPUS_DISABLE_DECODER */
 
 /**@}*/
 

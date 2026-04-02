@@ -72,6 +72,7 @@ extern "C" {
  * @li @ref opus_custom
  */
 
+#ifndef OPUS_DISABLE_ENCODER
 /** @defgroup opus_encoder Opus Encoder
   * @{
   *
@@ -366,7 +367,9 @@ OPUS_EXPORT void opus_encoder_destroy(OpusEncoder *st);
   */
 OPUS_EXPORT int opus_encoder_ctl(OpusEncoder *st, int request, ...) OPUS_ARG_NONNULL(1);
 /**@}*/
+#endif /* OPUS_DISABLE_ENCODER */
 
+#ifndef OPUS_DISABLE_DECODER
 /** @defgroup opus_decoder Opus Decoder
   * @{
   *
@@ -584,6 +587,8 @@ OPUS_EXPORT OPUS_WARN_UNUSED_RESULT int opus_decode_float(
   * @see opus_decoderctls
   */
 OPUS_EXPORT int opus_decoder_ctl(OpusDecoder *st, int request, ...) OPUS_ARG_NONNULL(1);
+
+#endif /* OPUS_DISABLE_DECODER */
 
 /** Frees an <code>OpusDecoder</code> allocated by opus_decoder_create().
   * @param[in] st <tt>OpusDecoder*</tt>: State to be freed.

@@ -97,7 +97,9 @@ extern "C" {
  * It is position independent and can be freely copied.
  * @see opus_projection_ambisonics_encoder_create
  */
+#ifndef OPUS_DISABLE_ENCODER
 typedef struct OpusProjectionEncoder OpusProjectionEncoder;
+#endif
 
 
 /** Opus projection decoder state.
@@ -106,9 +108,12 @@ typedef struct OpusProjectionEncoder OpusProjectionEncoder;
   * @see opus_projection_decoder_create
   * @see opus_projection_decoder_init
   */
+#ifndef OPUS_DISABLE_DECODER
 typedef struct OpusProjectionDecoder OpusProjectionDecoder;
+#endif
 
 
+#ifndef OPUS_DISABLE_ENCODER
 /**\name Projection encoder functions */
 /**@{*/
 
@@ -368,9 +373,13 @@ OPUS_EXPORT void opus_projection_encoder_destroy(OpusProjectionEncoder *st);
   */
 OPUS_EXPORT int opus_projection_encoder_ctl(OpusProjectionEncoder *st, int request, ...) OPUS_ARG_NONNULL(1);
 
+/**@}*/
+#endif /* OPUS_DISABLE_ENCODER */
+
 
 /**@}*/
 
+#ifndef OPUS_DISABLE_DECODER
 /**\name Projection decoder functions */
 /**@{*/
 
@@ -630,9 +639,8 @@ OPUS_EXPORT int opus_projection_decoder_ctl(OpusProjectionDecoder *st, int reque
   * @param st <tt>OpusProjectionDecoder</tt>: Projection decoder state to be freed.
   */
 OPUS_EXPORT void opus_projection_decoder_destroy(OpusProjectionDecoder *st);
-
-
 /**@}*/
+#endif /* OPUS_DISABLE_DECODER */
 
 /**@}*/
 
