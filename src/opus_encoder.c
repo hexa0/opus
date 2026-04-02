@@ -297,7 +297,7 @@ int opus_encoder_init(OpusEncoder* st, opus_int32 Fs, int channels, int applicat
     st->application = application;
     st->signal_type = OPUS_AUTO;
     st->user_bandwidth = OPUS_AUTO;
-    st->max_bandwidth = OPUS_BANDWIDTH_ACTUALFULLBAND;
+    st->max_bandwidth = OPUS_BANDWIDTH_FULLBAND;
     st->force_channels = OPUS_AUTO;
     st->user_forced_mode = OPUS_AUTO;
     st->voice_ratio = -1;
@@ -2278,7 +2278,7 @@ static opus_int32 opus_encode_frame_native(OpusEncoder *st, const opus_res *pcm,
                 endband = 19;
                 break;
             case OPUS_BANDWIDTH_FULLBAND:
-                endband = 21;
+                endband = 25;
 			case OPUS_BANDWIDTH_ACTUALFULLBAND:
 				endband = 25;
                 break;
