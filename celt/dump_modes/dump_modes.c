@@ -50,9 +50,6 @@
 #endif
 
 #define COEF16(x, a) ((opus_int16)SATURATE(((opus_int64)(x)+(1<<(a)>>1))>>(a), 32767))
-int opus_select_arch(void) {
-   return 0;
-}
 
 void dump_modes(FILE *file, CELTMode **modes, int nb_modes)
 {
