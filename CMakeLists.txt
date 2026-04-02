@@ -11,6 +11,9 @@ include(OpusBuildtype)
 include(OpusConfig)
 include(OpusSources)
 
+option(OPUS_DISABLE_ENCODER "Disable Opus encoder" OFF)
+option(OPUS_DISABLE_DECODER "Disable Opus decoder" OFF)
+
 if(OPUS_DISABLE_ENCODER)
   list(REMOVE_ITEM opus_sources
        src/opus_encoder.c
