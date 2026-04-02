@@ -1,0 +1,7 @@
+git diff 3ae6b6ec1f327acc57fa867035385df6358c3e00 HEAD -- ':!celt/static_modes_fixed.h*' ':!celt/static_modes_float.h*' ':!tester.c*'
+gcc -o tester tester.c build/libopus.a -Iinclude -Ibuild -lm -lpthread && ./tester
+make -j$(nproc)
+gcc -O2 -DVAR_ARRAYS -DCUSTOM_MODES -DFIXED_POINT -I../include -I. -I../silk/fixed -I../silk dump_modes/dump_modes.c modes.c mdct.c entcode.c rate.c kiss_fft.c mathops.c entenc.c entdec.c cwrs.c vq.c -o dump_modes/dump_modes_fixed -lm
+gcc -O2 -DVAR_ARRAYS -DCUSTOM_MODES -I../include -I. -I../silk/fixed -I../silk dump_modes/dump_modes.c modes.c mdct.c entcode.c rate.c kiss_fft.c mathops.c entenc.c entdec.c cwrs.c vq.c -o dump_modes/dump_modes_float -lm
+./dump_modes_float 48000 960 > static_modes_float.h
+./dump_modes_fixed 48000 960 > static_modes_fixed.h
